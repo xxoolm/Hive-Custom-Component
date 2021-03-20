@@ -1,5 +1,6 @@
 """Config Flow for Hive."""
 
+import voluptuous as vol
 from apyhiveapi import Auth
 from apyhiveapi.helper.hive_exceptions import (
     HiveApiError,
@@ -7,8 +8,6 @@ from apyhiveapi.helper.hive_exceptions import (
     HiveInvalidPassword,
     HiveInvalidUsername,
 )
-import voluptuous as vol
-
 from homeassistant import config_entries
 from homeassistant.const import CONF_PASSWORD, CONF_SCAN_INTERVAL, CONF_USERNAME
 from homeassistant.core import callback

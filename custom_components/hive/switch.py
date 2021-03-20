@@ -33,15 +33,14 @@ class HiveDevicePlug(HiveEntity, SwitchEntity):
     @property
     def device_info(self):
         """Return device information."""
-        if self.device["hiveType"] == "activeplug":
-            return {
-                "identifiers": {(DOMAIN, self.device["device_id"])},
-                "name": self.device["device_name"],
-                "model": self.device["deviceData"]["model"],
-                "manufacturer": self.device["deviceData"]["manufacturer"],
-                "sw_version": self.device["deviceData"]["version"],
-                "via_device": (DOMAIN, self.device["parentDevice"]),
-            }
+        return {
+            "identifiers": {(DOMAIN, self.device["device_id"])},
+            "name": self.device["device_name"],
+            "model": self.device["deviceData"]["model"],
+            "manufacturer": self.device["deviceData"]["manufacturer"],
+            "sw_version": self.device["deviceData"]["version"],
+            "via_device": (DOMAIN, self.device["parentDevice"]),
+        }
 
     @property
     def name(self):
@@ -56,14 +55,15 @@ class HiveDevicePlug(HiveEntity, SwitchEntity):
     @property
     def device_state_attributes(self):
         """Show Device Attributes."""
-        return {
-            ATTR_MODE: self.attributes.get(ATTR_MODE),
-        }
+        if self.device["hiveType"] == "activeplug":
+            return {
+                ATTR_MODE: self.attributes.get(ATTR_MODE),
+            }
 
     @property
     def current_power_w(self):
         """Return the current power usage in W."""
-        return self.device["status"]["power_usage"]
+        return self.device["status"].get("power_usage")
 
     @property
     def is_on(self):
@@ -83,4 +83,4 @@ class HiveDevicePlug(HiveEntity, SwitchEntity):
     async def async_update(self):
         """Update all Node data from Hive."""
         await self.hive.session.updateData(self.device)
-        self.device = await self.hive.switch.getPlug(self.device)
+        self.device = await self.hive.switch.getSwitch(self.device)

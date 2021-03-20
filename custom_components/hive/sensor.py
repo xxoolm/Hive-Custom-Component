@@ -7,25 +7,24 @@ https://home-assistant.io/components/sensor.hive/
 
 from datetime import timedelta
 
+from homeassistant.components.sensor import DEVICE_CLASS_BATTERY
 from homeassistant.const import TEMP_CELSIUS
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.icon import icon_for_battery_level
-from homeassistant.components.sensor import DEVICE_CLASS_BATTERY
 
 from . import HiveEntity
 from .const import DOMAIN
-
 
 DEPENDENCIES = ["hive"]
 PARALLEL_UPDATES = 0
 SCAN_INTERVAL = timedelta(seconds=15)
 DEVICETYPE = {
-    "CurrentTemperature": {
+    "Heating_Current_Temperature": {
         "icon": "mdi:thermometer",
         "unit": TEMP_CELSIUS,
         "type": "temperature",
     },
-    "TargetTemperature": {
+    "Heating_Target_Temperature": {
         "icon": "mdi:thermometer",
         "unit": TEMP_CELSIUS,
         "type": "temperature",
@@ -139,7 +138,7 @@ class HiveSensorEntity(HiveEntity, Entity):
             self.attributes = await self.get_heating_state_sa()
         elif self.device["hiveType"] == "Heating_Boost":
             s_a = {}
-            if await self.hive.heating.getBoost(self.device) == "ON":
+            if await self.hive.heating.getBoostStatus(self.device) == "ON":
                 minsend = await self.hive.heating.getBoostTime(self.device)
                 s_a.update({"Boost ends in": (str(minsend) + " minutes")})
             self.attributes = s_a

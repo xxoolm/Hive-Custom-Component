@@ -4,7 +4,7 @@
 ![CodeQL](https://github.com/Pyhive/HA-Hive-Custom-Component/workflows/CodeQL/badge.svg)
 
 This is a custom version of the Home Assistant Hive
-component. This version will setup the Home assitant
+component. This version will setup the Home assistant
 hive component, but will also take device attributes
 within the hive system and set them up as individual
 sensors e.g `Living Room Lamp Battery Level`
@@ -65,12 +65,12 @@ change the below options from the Home Assistant integration page.
 
 * 1 - **Scan Interval**
 This determines how often the integration should communicate with Hive to retrieve new data.
-The defualt configuration is 120 seconds but can be reduced to as low as 30 seconds.
+The default configuration is 120 seconds but can be reduced to as low as 30 seconds.
 
 * 2 - **Debug Categories**
 This give you the flex ability to switch on debugging mode for individual categories e.g. Lights, Switches
 It is switched off by default but can be enabled by updating the options withn the home assistant integrations page.
-Home Assistant also neeeds to know that you want to debug the system so the below YAML will need to be added also.
+Home Assistant also needs to know that you want to debug the system so the below YAML will need to be added also.
 
 ```yaml
 logger:
@@ -95,7 +95,7 @@ and replace the current hive folder with the newly downloaded one.
 
 ## Configuring
 
-This component will retreive the hive data and
+This component will retrieve the hive data and
 update Home Assistant every 2 minutes by default.
 This can updated in the integrations page by
 clicking the options button for the integration.

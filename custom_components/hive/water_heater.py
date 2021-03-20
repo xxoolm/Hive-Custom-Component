@@ -3,7 +3,6 @@
 from datetime import timedelta
 
 import voluptuous as vol
-
 from homeassistant.components.water_heater import (
     STATE_ECO,
     STATE_OFF,
@@ -12,7 +11,8 @@ from homeassistant.components.water_heater import (
     WaterHeaterEntity,
 )
 from homeassistant.const import TEMP_CELSIUS
-from homeassistant.helpers import config_validation as cv, entity_platform
+from homeassistant.helpers import config_validation as cv
+from homeassistant.helpers import entity_platform
 
 from . import HiveEntity, refresh_system
 from .const import (
@@ -146,4 +146,4 @@ class HiveWaterHeater(HiveEntity, WaterHeaterEntity):
     async def async_update(self):
         """Update all Node data from Hive."""
         await self.hive.session.updateData(self.device)
-        self.device = await self.hive.hotwater.getHotwater(self.device)
+        self.device = await self.hive.hotwater.getWaterHeater(self.device)

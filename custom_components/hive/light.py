@@ -1,6 +1,7 @@
 """Support for Hive light devices."""
 from datetime import timedelta
 
+import homeassistant.util.color as color_util
 from homeassistant.components.light import (
     ATTR_BRIGHTNESS,
     ATTR_COLOR_TEMP,
@@ -10,7 +11,6 @@ from homeassistant.components.light import (
     SUPPORT_COLOR_TEMP,
     LightEntity,
 )
-import homeassistant.util.color as color_util
 
 from . import HiveEntity, refresh_system
 from .const import ATTR_MODE, DOMAIN
