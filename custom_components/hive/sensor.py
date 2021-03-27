@@ -130,7 +130,7 @@ class HiveSensorEntity(HiveEntity, Entity):
         """Update all Node data from Hive."""
         await self.hive.session.updateData(self.device)
         self.device = await self.hive.sensor.getSensor(self.device)
-        if self.device["hiveType"] == "CurrentTemperature":
+        if self.device["hiveType"] == "Heating_Current_Temperature":
             self.attributes = await self.get_current_temp_sa()
         elif self.device["hiveType"] == "Heating_State":
             self.attributes = await self.get_heating_state_sa()
@@ -182,15 +182,13 @@ class HiveSensorEntity(HiveEntity, Entity):
                 }
             )
 
-        temp_current = await self.hive.heating.currentTemperature(self.device)
-        temperature_target = await self.hive.heating.targetTemperature(self.device)
+        temp_current = await self.hive.heating.getCurrentTemperature(self.device)
+        temperature_target = await self.hive.heating.getTargetTemperature(self.device)
 
         if temperature_target > temp_current:
             temperature_difference = temperature_target - temp_current
             temperature_difference = round(temperature_difference, 2)
 
-            s_a.update({"Current Temperature": temp_current})
-            s_a.update({"Target Temperature": temperature_target})
             s_a.update({"Temperature Difference": temperature_difference})
 
         return s_a
